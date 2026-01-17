@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOIR | Editorial Portfolio</title>
+    <title>Spii Xatspace 2026</title>
     
     <!-- Tipografía Premium -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +32,7 @@
             padding: 0;
             box-sizing: border-box;
             cursor: none; 
-            scroll-behavior: smooth; /* Scroll suave nativo */
+            scroll-behavior: smooth; 
         }
 
         body {
@@ -183,7 +183,6 @@
         .hero-bg-img {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%; 
-            /* [EDITADO] Imagen local */
             background-image: url('Background1.jpg');
             background-size: cover;
             background-position: center;
@@ -258,18 +257,31 @@
 
         .gallery-item { position: relative; cursor: none; }
         
+        /* Layout de la cuadrícula */
         .g-item-1 { grid-column: 2 / span 5; } 
         .g-item-2 { grid-column: 8 / span 4; margin-top: 15vh; } 
-        .g-item-3 { grid-column: 1 / span 12; height: 80vh; } 
+        /* [CORREGIDO] Eliminada altura fija para evitar recorte */
+        .g-item-3 { grid-column: 1 / span 12; } 
         .g-item-4 { grid-column: 1 / span 4; } 
         .g-item-5 { grid-column: 6 / span 3; margin-top: 5vh; }
         .g-item-6 { grid-column: 10 / span 3; }
 
-        .img-wrapper { width: 100%; height: 100%; overflow: hidden; position: relative; }
+        /* [CORREGIDO] Height auto para que el contenedor se adapte a la imagen */
+        .img-wrapper { 
+            width: 100%; 
+            height: auto; 
+            overflow: hidden; 
+            position: relative; 
+        }
         
+        /* [CORREGIDO] Width 100% y Height auto para que la imagen se vea completa siempre */
         .gallery-img {
-            width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%);
-            transition: transform 0.8s var(--ease-out), filter 0.5s ease; display: block;
+            width: 100%; 
+            height: auto; 
+            object-fit: contain; /* Asegura que se vea todo sin recortar */
+            filter: grayscale(100%);
+            transition: transform 0.8s var(--ease-out), filter 0.5s ease; 
+            display: block;
         }
 
         .gallery-item:hover .gallery-img { transform: scale(1.05); filter: grayscale(0%) brightness(0.8); }
@@ -283,7 +295,7 @@
         .caption-meta { font-family: var(--font-ui); font-size: 0.7rem; letter-spacing: 0.1em; color: #ccc; }
 
         /* * --------------------------------------------------------------------------
-         * 8. SECCIÓN ACERCA DE MÍ (EFECTOS AÑADIDOS)
+         * 8. SECCIÓN ACERCA DE MÍ
          * --------------------------------------------------------------------------
          */
         .about-section {
@@ -296,7 +308,6 @@
             margin-bottom: 2rem; max-width: 500px;
         }
         
-        /* Efectos para la imagen de Acerca de Mí */
         .about-image { 
             width: 80%; 
             height: 60vh; 
@@ -349,11 +360,22 @@
         }
 
         .player-row-top { display: flex; align-items: center; gap: 15px; flex: 0 0 auto; }
+        
         .album-art {
             width: 45px; height: 45px; border-radius: 50%;
             overflow: hidden; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.5);
         }
-        .album-art img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* [EDITADO] Animación de rotación para la portada */
+        .album-art img { 
+            width: 100%; height: 100%; object-fit: cover; 
+            animation: spin 10s linear infinite; /* Gira infinitamente */
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
         .track-info { flex-grow: 1; overflow: hidden; padding-right: 20px; min-width: 120px; }
         .track-name { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.05em; white-space: nowrap; }
         .track-artist { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
@@ -458,7 +480,7 @@
             .gallery-grid { grid-template-columns: repeat(6, 1fr); }
             .g-item-1 { grid-column: 1 / span 6; }
             .g-item-2 { grid-column: 2 / span 4; margin-top: 5vh; }
-            .g-item-3 { grid-column: 1 / span 6; height: 50vh; }
+            .g-item-3 { grid-column: 1 / span 6; } /* Altura auto en responsive */
             .g-item-4 { grid-column: 1 / span 3; }
             .g-item-5 { grid-column: 4 / span 3; margin-top: 0; }
             .g-item-6 { grid-column: 2 / span 4; margin-top: 5vh; }
@@ -474,7 +496,6 @@
             .track-info, .volume-container { display: none; }
             .album-art { width: 35px; height: 35px; }
             
-            /* [EDITADO] Mejora de navegación en Tablets/Móvil: Ahora visible y centrada */
             .nav-links { 
                 position: relative; 
                 left: auto; 
@@ -489,12 +510,11 @@
         }
 
         @media (max-width: 768px) {
-            /* [EDITADO] Ajuste específico para móviles: Stack vertical */
             nav {
                 flex-direction: column;
                 gap: 15px;
-                top: 15px; /* Reducir margen superior */
-                background: rgba(5,5,5,0.85); /* Fondo sutil para legibilidad */
+                top: 15px; 
+                background: rgba(5,5,5,0.85); 
                 padding: 15px;
                 backdrop-filter: blur(10px);
                 border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -504,7 +524,8 @@
             .gallery-section { padding: 10vh 5vw; } 
             .gallery-grid { display: flex; flex-direction: column; gap: 50px; }
             .gallery-item { width: 100%; margin: 0 !important; }
-            .g-item-3 { height: 40vh; }
+            /* Quitar height fijo si hubiese en móvil */
+            .g-item-3 { height: auto; } 
             .quote-text { font-size: 1.5rem; }
         }
     </style>
@@ -554,72 +575,66 @@
             <!-- Item 1 -->
             <div class="gallery-item g-item-1 fade-up">
                 <div class="img-wrapper">
-                    <!-- [EDITADO] Imagen local -->
                     <img src="img1.jpg" alt="Retrato Moda" class="gallery-img">
                 </div>
                 <div class="img-caption">
-                    <span class="caption-title">Ethereal Gaze</span>
-                    <span class="caption-meta">EDITORIAL</span>
+                    <!-- [EDITADO] Texto unificado -->
+                    <span class="caption-title">spineLLy69</span>
                 </div>
             </div>
 
             <!-- Item 2 -->
             <div class="gallery-item g-item-2 fade-up">
                 <div class="img-wrapper">
-                    <!-- [EDITADO] Imagen local -->
                     <img src="img2.jpg" alt="Arquitectura" class="gallery-img">
                 </div>
                 <div class="img-caption">
-                    <span class="caption-title">Line & Shadow</span>
-                    <span class="caption-meta">FINE ART</span>
+                    <!-- [EDITADO] Texto unificado -->
+                    <span class="caption-title">spineLLy69</span>
                 </div>
             </div>
 
             <!-- Item 3 -->
             <div class="gallery-item g-item-3 fade-up">
                 <div class="img-wrapper">
-                    <!-- [EDITADO] Imagen local -->
-                    <img src="img3.jpg" alt="Paisaje" class="gallery-img" style="object-position: bottom;">
+                    <img src="img3.jpg" alt="Paisaje" class="gallery-img">
                 </div>
                 <div class="img-caption">
-                    <!-- [EDITADO] Título cambiado y landscape eliminado -->
-                    <span class="caption-title">Look At me</span>
+                    <!-- [EDITADO] Texto unificado -->
+                    <span class="caption-title">spineLLy69</span>
                 </div>
             </div>
 
             <!-- Item 4 -->
             <div class="gallery-item g-item-4 fade-up">
                 <div class="img-wrapper">
-                    <!-- [EDITADO] Imagen local -->
                     <img src="img4.jpg" alt="Moda" class="gallery-img">
                 </div>
                 <div class="img-caption">
-                    <span class="caption-title">Texture Study</span>
-                    <span class="caption-meta">CONCEPTUAL</span>
+                    <!-- [EDITADO] Texto unificado -->
+                    <span class="caption-title">spineLLy69</span>
                 </div>
             </div>
 
             <!-- Item 5 -->
             <div class="gallery-item g-item-5 fade-up">
                 <div class="img-wrapper">
-                    <!-- [EDITADO] Imagen local -->
                     <img src="img5.jpg" alt="Luz" class="gallery-img">
                 </div>
                 <div class="img-caption">
-                    <span class="caption-title">Noir Essence</span>
-                    <span class="caption-meta">STUDIO</span>
+                    <!-- [EDITADO] Texto unificado -->
+                    <span class="caption-title">spineLLy69</span>
                 </div>
             </div>
 
              <!-- Item 6 -->
              <div class="gallery-item g-item-6 fade-up">
                 <div class="img-wrapper">
-                    <!-- [EDITADO] Imagen local -->
                     <img src="img6.jpg" alt="Detalle" class="gallery-img">
                 </div>
                 <div class="img-caption">
-                    <span class="caption-title">Urban Solitude</span>
-                    <span class="caption-meta">STREET</span>
+                    <!-- [EDITADO] Texto unificado -->
+                    <span class="caption-title">spineLLy69</span>
                 </div>
             </div>
         </div>
@@ -632,10 +647,8 @@
             <p class="ui-text" style="text-transform: none; letter-spacing: 0.02em;">
                 Lo imperfecto es hermoso, la locura es genial y es mejor ser absolutamente ridículo que absolutamente aburrido.
             </p>
-            <!-- [ELIMINADO] ID de spinelly eliminado -->
         </div>
         <div class="about-image">
-            <!-- [EDITADO] Imagen local -->
             <img src="aboutme.jpg" alt="Retrato Autor">
         </div>
     </section>
@@ -660,7 +673,6 @@
     <div id="music-player">
         <div class="player-row-top">
             <div class="album-art">
-                <!-- [EDITADO] Imagen local -->
                 <img src="album_art.jpg" alt="Album Art">
             </div>
             <div class="track-info">
@@ -741,7 +753,6 @@
             const trackName = document.querySelector('.track-name');
             const trackArtist = document.querySelector('.track-artist');
             
-            /* [EDITADO] Lista de reproducción actualizada con archivos locales */
             const tracks = [
                 { name: "On the Way", artist: "Aina The End", file: "track1.mp3" }, 
                 { name: "End of You", artist: "Poppy & Amy Lee", file: "track2.mp3" }, 
@@ -754,7 +765,6 @@
             let isPlaying = false;
             let progress = 0;
             let interval;
-            // Variable para almacenar el objeto Audio
             let audio = new Audio();
             
             const playIcon = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
@@ -763,14 +773,12 @@
             function updateTrackInfo() {
                 trackName.textContent = tracks[currentTrackIndex].name;
                 trackArtist.textContent = tracks[currentTrackIndex].artist;
-                // Cargar la nueva pista pero no reproducir automáticamente a menos que ya estuviera sonando
                 audio.src = tracks[currentTrackIndex].file;
                 progress = 0;
                 progressBar.style.width = '0%';
                 timeDisplay.textContent = '00:00';
             }
             
-            // Inicializar info
             updateTrackInfo();
 
             playBtn.addEventListener('click', togglePlay);
@@ -780,7 +788,6 @@
                     audio.play().then(() => {
                         isPlaying = true;
                         playBtn.innerHTML = pauseIcon;
-                        // Iniciar intervalo para actualizar barra de progreso
                         interval = setInterval(updateProgress, 100);
                     }).catch(error => console.log("Audio play failed: ", error));
                 } else {
