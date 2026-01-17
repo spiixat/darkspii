@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spii Xatspace 2026</title>
+    <title>Spii | Xatspace 2026</title>
     
     <!-- Tipografía Premium -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -260,13 +260,12 @@
         /* Layout de la cuadrícula */
         .g-item-1 { grid-column: 2 / span 5; } 
         .g-item-2 { grid-column: 8 / span 4; margin-top: 15vh; } 
-        /* [CORREGIDO] Eliminada altura fija para evitar recorte */
-        .g-item-3 { grid-column: 1 / span 12; } 
+        /* [CORREGIDO] Reducido de 12 a 8 para evitar que la imagen sea demasiado grande */
+        .g-item-3 { grid-column: 3 / span 8; } 
         .g-item-4 { grid-column: 1 / span 4; } 
         .g-item-5 { grid-column: 6 / span 3; margin-top: 5vh; }
         .g-item-6 { grid-column: 10 / span 3; }
 
-        /* [CORREGIDO] Height auto para que el contenedor se adapte a la imagen */
         .img-wrapper { 
             width: 100%; 
             height: auto; 
@@ -274,11 +273,10 @@
             position: relative; 
         }
         
-        /* [CORREGIDO] Width 100% y Height auto para que la imagen se vea completa siempre */
         .gallery-img {
             width: 100%; 
             height: auto; 
-            object-fit: contain; /* Asegura que se vea todo sin recortar */
+            object-fit: contain; 
             filter: grayscale(100%);
             transition: transform 0.8s var(--ease-out), filter 0.5s ease; 
             display: block;
@@ -366,10 +364,9 @@
             overflow: hidden; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.5);
         }
         
-        /* [EDITADO] Animación de rotación para la portada */
         .album-art img { 
             width: 100%; height: 100%; object-fit: cover; 
-            animation: spin 10s linear infinite; /* Gira infinitamente */
+            animation: spin 10s linear infinite; 
         }
 
         @keyframes spin {
@@ -578,7 +575,6 @@
                     <img src="img1.jpg" alt="Retrato Moda" class="gallery-img">
                 </div>
                 <div class="img-caption">
-                    <!-- [EDITADO] Texto unificado -->
                     <span class="caption-title">spineLLy69</span>
                 </div>
             </div>
@@ -589,7 +585,6 @@
                     <img src="img2.jpg" alt="Arquitectura" class="gallery-img">
                 </div>
                 <div class="img-caption">
-                    <!-- [EDITADO] Texto unificado -->
                     <span class="caption-title">spineLLy69</span>
                 </div>
             </div>
@@ -600,7 +595,6 @@
                     <img src="img3.jpg" alt="Paisaje" class="gallery-img">
                 </div>
                 <div class="img-caption">
-                    <!-- [EDITADO] Texto unificado -->
                     <span class="caption-title">spineLLy69</span>
                 </div>
             </div>
@@ -611,7 +605,6 @@
                     <img src="img4.jpg" alt="Moda" class="gallery-img">
                 </div>
                 <div class="img-caption">
-                    <!-- [EDITADO] Texto unificado -->
                     <span class="caption-title">spineLLy69</span>
                 </div>
             </div>
@@ -622,7 +615,6 @@
                     <img src="img5.jpg" alt="Luz" class="gallery-img">
                 </div>
                 <div class="img-caption">
-                    <!-- [EDITADO] Texto unificado -->
                     <span class="caption-title">spineLLy69</span>
                 </div>
             </div>
@@ -633,7 +625,6 @@
                     <img src="img6.jpg" alt="Detalle" class="gallery-img">
                 </div>
                 <div class="img-caption">
-                    <!-- [EDITADO] Texto unificado -->
                     <span class="caption-title">spineLLy69</span>
                 </div>
             </div>
