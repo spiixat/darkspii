@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOIR | Editorial Portfolio</title>
+    
+    <!-- Tipografía Premium -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+
+    <style>
+        /* * --------------------------------------------------------------------------
+         * 1. CONFIGURACIÓN DE COLORES Y FUENTES
+         * --------------------------------------------------------------------------
+         */
+        :root {
+            --bg-color: #050505; 
+            --text-main: #f0f0f0; 
+            --text-muted: #888888; 
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-blur: 15px;
+            --font-headline: 'Cormorant Garamond', serif; 
+            --font-ui: 'Montserrat', sans-serif;          
+            --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; 
+            scroll-behavior: smooth; /* Scroll suave nativo */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-ui);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a { text-decoration: none; color: inherit; transition: opacity 0.3s ease; }
+        ul { list-style: none; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+        /* * --------------------------------------------------------------------------
+         * 2. CURSOR PERSONALIZADO
+         * --------------------------------------------------------------------------
+         */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-dot { width: 8px; height: 8px; background-color: white; }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid white;
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        body.hovering .cursor-outline {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: transparent;
+            backdrop-filter: blur(2px);
+        }
+
+        /* * --------------------------------------------------------------------------
+         * 3. TIPOGRAFÍA Y EFECTOS
+         * --------------------------------------------------------------------------
+         */
+        .display-text {
+            font-family: var(--font-headline);
+            font-weight: 300;
+            line-height: 0.95;
+            letter-spacing: -0.02em;
+            transition: letter-spacing 0.5s ease, font-style 0.3s ease;
+        }
+
+        .text-hover-effect:hover {
+            letter-spacing: 0.05em;
+            font-style: italic;
+            color: #fff;
+        }
+
+        .ui-text {
+            font-family: var(--font-ui);
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        /* * --------------------------------------------------------------------------
+         * 4. NAVEGACIÓN
+         * --------------------------------------------------------------------------
+         */
+        nav {
+            position: fixed;
+            top: 65px;
+            left: 0;
+            width: 100%;
+            padding: 0 5vw;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            z-index: 100;
+            mix-blend-mode: difference;
+            color: white;
+        }
+
+        .nav-logo {
+            font-family: var(--font-headline);
+            font-size: 1.5rem;
+            font-style: italic;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .nav-links {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 4vw;
+        }
+
+        .nav-item { position: relative; cursor: none; }
+
+        .nav-item::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 1px;
+            background: white; transition: width 0.4s var(--ease-out);
+        }
+        .nav-item:hover::after { width: 100%; }
+
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(4px);
+            transition: all 0.4s ease;
+            cursor: none;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+        }
+        .glass-btn:hover { background: rgba(255, 255, 255, 0.25); transform: translateY(-2px); }
+
+        /* * --------------------------------------------------------------------------
+         * 5. SECCIÓN HERO (PORTADA) & EFECTO LINTERNA
+         * --------------------------------------------------------------------------
+         */
+        .hero {
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-bg-img {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; 
+            /* [EDITADO] Imagen local */
+            background-image: url('Background1.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+
+        .hero-flashlight {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 2;
+            background: radial-gradient(
+                circle 600px at var(--cursor-x, 50%) var(--cursor-y, 50%),
+                transparent 0%,
+                rgba(0, 0, 0, 0.98) 70% 
+            );
+            pointer-events: none; 
+        }
+
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: transparent; z-index: 2;
+            background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 4px 4px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative; z-index: 3; text-align: center;
+            transform: translateY(5vh); opacity: 0; animation: textReveal 1.5s ease 1s forwards;
+            pointer-events: auto;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 12vw, 9rem); margin-bottom: 1rem;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5); cursor: none;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(0.8rem, 1.5vw, 1.2rem); letter-spacing: 0.3em; opacity: 0.9;
+        }
+
+        /* * --------------------------------------------------------------------------
+         * 6. SECCIÓN QUOTE (Frase)
+         * --------------------------------------------------------------------------
+         */
+        .quote-section {
+            padding: 20vh 10vw;
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            background: var(--bg-color);
+        }
+
+        .quote-text {
+            font-family: var(--font-headline); font-size: clamp(2rem, 4vw, 3.5rem);
+            line-height: 1.2; font-style: italic; max-width: 800px; color: #ddd; margin-bottom: 2rem;
+        }
+        .quote-author { color: var(--text-muted); letter-spacing: 0.2em; }
+
+        /* * --------------------------------------------------------------------------
+         * 7. GALERÍA
+         * --------------------------------------------------------------------------
+         */
+        .gallery-section { padding: 10vh 12vw; position: relative; z-index: 10; background-color: var(--bg-color); }
+        
+        .gallery-header {
+            margin-bottom: 10vh; display: flex; justify-content: space-between;
+            align-items: flex-end; padding-bottom: 20px; border-bottom: 1px solid #222;
+        }
+
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(12, 1fr); gap: 4vw; row-gap: 12vh;
+        }
+
+        .gallery-item { position: relative; cursor: none; }
+        
+        .g-item-1 { grid-column: 2 / span 5; } 
+        .g-item-2 { grid-column: 8 / span 4; margin-top: 15vh; } 
+        .g-item-3 { grid-column: 1 / span 12; height: 80vh; } 
+        .g-item-4 { grid-column: 1 / span 4; } 
+        .g-item-5 { grid-column: 6 / span 3; margin-top: 5vh; }
+        .g-item-6 { grid-column: 10 / span 3; }
+
+        .img-wrapper { width: 100%; height: 100%; overflow: hidden; position: relative; }
+        
+        .gallery-img {
+            width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%);
+            transition: transform 0.8s var(--ease-out), filter 0.5s ease; display: block;
+        }
+
+        .gallery-item:hover .gallery-img { transform: scale(1.05); filter: grayscale(0%) brightness(0.8); }
+        .gallery-item:hover .img-caption { opacity: 1; transform: translateY(0); }
+
+        .img-caption {
+            position: absolute; bottom: 20px; left: 20px; z-index: 5; opacity: 0;
+            transform: translateY(10px); transition: all 0.5s ease; pointer-events: none;
+        }
+        .caption-title { font-family: var(--font-headline); font-size: 1.5rem; font-style: italic; display: block; }
+        .caption-meta { font-family: var(--font-ui); font-size: 0.7rem; letter-spacing: 0.1em; color: #ccc; }
+
+        /* * --------------------------------------------------------------------------
+         * 8. SECCIÓN ACERCA DE MÍ (EFECTOS AÑADIDOS)
+         * --------------------------------------------------------------------------
+         */
+        .about-section {
+            padding: 20vh 15vw; display: grid; grid-template-columns: 1fr 1fr;
+            gap: 5vw; align-items: center;
+        }
+        .about-text h2 { font-size: 3rem; margin-bottom: 2rem; color: #fff; }
+        .about-text p {
+            font-family: var(--font-ui); font-size: 0.9rem; line-height: 1.8; color: #aaa;
+            margin-bottom: 2rem; max-width: 500px;
+        }
+        
+        /* Efectos para la imagen de Acerca de Mí */
+        .about-image { 
+            width: 80%; 
+            height: 60vh; 
+            margin-left: auto; 
+            position: relative;
+            overflow: hidden; 
+        }
+        .about-image img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            filter: grayscale(100%) contrast(1.1);
+            transition: transform 0.8s var(--ease-out), filter 0.8s ease;
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.05);
+            filter: grayscale(80%) contrast(1.2) brightness(1.1); 
+        }
+
+        /* * --------------------------------------------------------------------------
+         * 9. ESTILOS DEL REPRODUCTOR DE MÚSICA
+         * --------------------------------------------------------------------------
+         */
+        #music-player {
+            position: fixed; 
+            bottom: 30px; 
+            left: 50%;
+            transform: translateX(-50%) !important;
+            width: 70vw;
+            min-width: 600px;
+            max-width: 1200px;
+            padding: 15px 30px;
+            
+            border-radius: 50px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            
+            z-index: 999;
+            cursor: none;
+            transition: all 0.3s ease;
+            
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .player-row-top { display: flex; align-items: center; gap: 15px; flex: 0 0 auto; }
+        .album-art {
+            width: 45px; height: 45px; border-radius: 50%;
+            overflow: hidden; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+        .album-art img { width: 100%; height: 100%; object-fit: cover; }
+        .track-info { flex-grow: 1; overflow: hidden; padding-right: 20px; min-width: 120px; }
+        .track-name { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.05em; white-space: nowrap; }
+        .track-artist { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
+
+        .player-controls-row { display: flex; align-items: center; justify-content: center; gap: 20px; flex: 1; }
+        .control-btn {
+            background: transparent; border: none; color: white; cursor: none;
+            display: flex; align-items: center; justify-content: center; opacity: 0.7; transition: 0.3s;
+        }
+        .control-btn:hover { opacity: 1; transform: scale(1.1); }
+        .control-btn.main-play { 
+            width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); opacity: 1;
+        }
+        .control-btn.main-play:hover { background: white; color: black; }
+
+        .volume-container { display: flex; align-items: center; gap: 8px; width: 100px; flex: 0 0 auto; }
+        .volume-slider {
+            -webkit-appearance: none; width: 100%; height: 2px; background: rgba(255,255,255,0.2); outline: none; cursor: none;
+        }
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 8px; height: 8px; background: white; border-radius: 50%; cursor: none;
+        }
+
+        .progress-container {
+            position: absolute; bottom: 0; left: 30px; right: 30px; height: 3px; 
+            background: rgba(255,255,255,0.05); cursor: none; 
+        }
+        .progress-bar { height: 100%; width: 0%; background: white; position: absolute; top: 0; left: 0; }
+        .time-display { position: absolute; bottom: 6px; right: 30px; font-size: 0.55rem; color: #666; }
+
+        /* * --------------------------------------------------------------------------
+         * MARQUEE WIDGET
+         * --------------------------------------------------------------------------
+         */
+        .marquee-section {
+            width: 100%;
+            padding: 8vh 0;
+            overflow: hidden;
+            background: var(--bg-color);
+            border-top: 1px solid #111;
+            position: relative;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 2vw;
+            white-space: nowrap;
+            animation: marqueeScroll 30s linear infinite;
+        }
+
+        .marquee-track span {
+            font-family: var(--font-headline);
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-style: italic;
+            color: #222; 
+            transition: color 0.4s ease;
+            cursor: none;
+        }
+
+        .marquee-section:hover .marquee-track span { color: #fff; }
+        .marquee-section:hover .marquee-track { animation-play-state: paused; }
+
+        @keyframes marqueeScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* * --------------------------------------------------------------------------
+         * 10. ANIMACIONES & FOOTER (GRID CENTRADO)
+         * --------------------------------------------------------------------------
+         */
+        @keyframes heroReveal { to { opacity: 1; transform: scale(1); } }
+        @keyframes textReveal { to { opacity: 1; transform: translateY(0); } }
+
+        .fade-up {
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        footer {
+            padding: 50px 5vw; 
+            border-top: 1px solid #111; 
+            display: grid;
+            grid-template-columns: 1fr auto 1fr; /* Izquierda, Centro (Auto), Derecha */
+            align-items: center;
+            color: #444; 
+            font-size: 0.7rem;
+            margin-bottom: 100px; 
+        }
+        
+        footer > :nth-child(1) { justify-self: start; }
+        footer > :nth-child(2) { justify-self: center; text-align: center; }
+        footer > :nth-child(3) { justify-self: end; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            * { cursor: auto !important; } .cursor-dot, .cursor-outline { display: none; }
+            .gallery-grid { grid-template-columns: repeat(6, 1fr); }
+            .g-item-1 { grid-column: 1 / span 6; }
+            .g-item-2 { grid-column: 2 / span 4; margin-top: 5vh; }
+            .g-item-3 { grid-column: 1 / span 6; height: 50vh; }
+            .g-item-4 { grid-column: 1 / span 3; }
+            .g-item-5 { grid-column: 4 / span 3; margin-top: 0; }
+            .g-item-6 { grid-column: 2 / span 4; margin-top: 5vh; }
+            .about-section { grid-template-columns: 1fr; padding: 20vh 5vw; } 
+            .about-image { width: 100%; height: 40vh; margin: 0; order: 1; margin-bottom: 2rem; }
+            .about-text { order: 2; }
+            nav { padding: 0 20px; }
+            
+            #music-player { 
+                width: 90vw; min-width: auto; bottom: 20px;
+                padding: 15px; gap: 10px;
+            }
+            .track-info, .volume-container { display: none; }
+            .album-art { width: 35px; height: 35px; }
+            
+            /* [EDITADO] Mejora de navegación en Tablets/Móvil: Ahora visible y centrada */
+            .nav-links { 
+                position: relative; 
+                left: auto; 
+                transform: none; 
+                display: flex; 
+                gap: 20px;
+                margin: 0 10px;
+            } 
+            
+            footer { display: flex; flex-direction: column; gap: 20px; text-align: center; }
+            footer > :nth-child(1), footer > :nth-child(2), footer > :nth-child(3) { justify-self: center; }
+        }
+
+        @media (max-width: 768px) {
+            /* [EDITADO] Ajuste específico para móviles: Stack vertical */
+            nav {
+                flex-direction: column;
+                gap: 15px;
+                top: 15px; /* Reducir margen superior */
+                background: rgba(5,5,5,0.85); /* Fondo sutil para legibilidad */
+                padding: 15px;
+                backdrop-filter: blur(10px);
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+            }
+            
+            .hero-title { font-size: 3.5rem; }
+            .gallery-section { padding: 10vh 5vw; } 
+            .gallery-grid { display: flex; flex-direction: column; gap: 50px; }
+            .gallery-item { width: 100%; margin: 0 !important; }
+            .g-item-3 { height: 40vh; }
+            .quote-text { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- NAVEGACIÓN -->
+    <nav>
+        <div class="nav-logo text-hover-effect">SPII</div>
+        <ul class="nav-links ui-text">
+            <li class="nav-item"><a href="#about">Acerca de Mí</a></li>
+            <li class="nav-item"><a href="#gallery">Galería</a></li>
+        </ul>
+        <button class="glass-btn ui-text" onclick="window.open('https://xat.com/vip', '_blank')">Encuéntrame</button>
+    </nav>
+
+    <!-- HERO / PORTADA -->
+    <header class="hero">
+        <div class="hero-bg-img"></div>
+        <div class="hero-flashlight"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title display-text text-hover-effect">Spinelly</h1>
+            <p class="hero-subtitle ui-text">Xatspace</p>
+        </div>
+    </header>
+
+    <!-- QUOTE -->
+    <section class="quote-section fade-up">
+        <blockquote class="quote-text display-text text-hover-effect">
+            "El poder de la imaginación nos hace infinitos."
+        </blockquote>
+        <span class="quote-author ui-text">— John Muir</span>
+    </section>
+
+    <!-- GALERÍA (ID Agregado para navegación) -->
+    <section class="gallery-section" id="gallery">
+        <div class="gallery-header fade-up">
+            <h2 class="display-text text-hover-effect" style="font-size: 2rem;">Galería</h2>
+        </div>
+
+        <div class="gallery-grid">
+            <!-- Item 1 -->
+            <div class="gallery-item g-item-1 fade-up">
+                <div class="img-wrapper">
+                    <!-- [EDITADO] Imagen local -->
+                    <img src="img1.jpg" alt="Retrato Moda" class="gallery-img">
+                </div>
+                <div class="img-caption">
+                    <span class="caption-title">Ethereal Gaze</span>
+                    <span class="caption-meta">EDITORIAL</span>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="gallery-item g-item-2 fade-up">
+                <div class="img-wrapper">
+                    <!-- [EDITADO] Imagen local -->
+                    <img src="img2.jpg" alt="Arquitectura" class="gallery-img">
+                </div>
+                <div class="img-caption">
+                    <span class="caption-title">Line & Shadow</span>
+                    <span class="caption-meta">FINE ART</span>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="gallery-item g-item-3 fade-up">
+                <div class="img-wrapper">
+                    <!-- [EDITADO] Imagen local -->
+                    <img src="img3.jpg" alt="Paisaje" class="gallery-img" style="object-position: bottom;">
+                </div>
+                <div class="img-caption">
+                    <!-- [EDITADO] Título cambiado y landscape eliminado -->
+                    <span class="caption-title">Look At me</span>
+                </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="gallery-item g-item-4 fade-up">
+                <div class="img-wrapper">
+                    <!-- [EDITADO] Imagen local -->
+                    <img src="img4.jpg" alt="Moda" class="gallery-img">
+                </div>
+                <div class="img-caption">
+                    <span class="caption-title">Texture Study</span>
+                    <span class="caption-meta">CONCEPTUAL</span>
+                </div>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="gallery-item g-item-5 fade-up">
+                <div class="img-wrapper">
+                    <!-- [EDITADO] Imagen local -->
+                    <img src="img5.jpg" alt="Luz" class="gallery-img">
+                </div>
+                <div class="img-caption">
+                    <span class="caption-title">Noir Essence</span>
+                    <span class="caption-meta">STUDIO</span>
+                </div>
+            </div>
+
+             <!-- Item 6 -->
+             <div class="gallery-item g-item-6 fade-up">
+                <div class="img-wrapper">
+                    <!-- [EDITADO] Imagen local -->
+                    <img src="img6.jpg" alt="Detalle" class="gallery-img">
+                </div>
+                <div class="img-caption">
+                    <span class="caption-title">Urban Solitude</span>
+                    <span class="caption-meta">STREET</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACERCA DE MÍ -->
+    <section class="about-section fade-up" id="about">
+        <div class="about-text">
+            <h2 class="display-text text-hover-effect">Acerca de Mí</h2>
+            <p class="ui-text" style="text-transform: none; letter-spacing: 0.02em;">
+                Lo imperfecto es hermoso, la locura es genial y es mejor ser absolutamente ridículo que absolutamente aburrido.
+            </p>
+            <!-- [ELIMINADO] ID de spinelly eliminado -->
+        </div>
+        <div class="about-image">
+            <!-- [EDITADO] Imagen local -->
+            <img src="aboutme.jpg" alt="Retrato Autor">
+        </div>
+    </section>
+
+    <!-- MARQUEE WIDGET -->
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <span>spineLLy69 — spineLLy69 — spineLLy69 — spineLLy69 — </span>
+            <span>spineLLy69 — spineLLy69 — spineLLy69 — spineLLy69 — </span>
+            <span>spineLLy69 — spineLLy69 — spineLLy69 — spineLLy69 — </span>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="ui-text">©2026 Eam96 Xatspace Design</div>
+        <div class="ui-text">VENEZUELA</div>
+        <a href="https://www.tiktok.com/@Spinelly94" target="_blank" class="ui-text text-hover-effect">TIKTOK</a>
+    </footer>
+
+    <!-- REPRODUCTOR DE MÚSICA -->
+    <div id="music-player">
+        <div class="player-row-top">
+            <div class="album-art">
+                <!-- [EDITADO] Imagen local -->
+                <img src="album_art.jpg" alt="Album Art">
+            </div>
+            <div class="track-info">
+                <div class="track-name ui-text">Midnight City</div>
+                <div class="track-artist">M83 (Remix)</div>
+            </div>
+        </div>
+        <div class="player-controls-row">
+            <button class="control-btn" id="prevBtn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+            </button>
+            <button class="control-btn main-play" id="playBtn">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <button class="control-btn" id="nextBtn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+            </button>
+        </div>
+        <div class="volume-container">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="opacity:0.7"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+            <input type="range" min="0" max="100" value="70" class="volume-slider" id="volumeSlider">
+        </div>
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="time-display ui-text">00:00</div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- 0. CUSTOM CURSOR & FLASHLIGHT LOGIC ---
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+            const flashlight = document.querySelector('.hero-flashlight');
+            
+            window.addEventListener('mousemove', (e) => {
+                const posX = e.clientX;
+                const posY = e.clientY;
+                
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+                cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
+
+                if (flashlight) {
+                    flashlight.style.setProperty('--cursor-x', `${posX}px`);
+                    flashlight.style.setProperty('--cursor-y', `${posY}px`);
+                }
+            });
+
+            const interactables = document.querySelectorAll('a, button, input, .nav-item, .gallery-item, .text-hover-effect');
+            interactables.forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+            });
+
+
+            // --- 1. SMOOTH SCROLL REVEAL ---
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+
+            // --- 2. MUSIC PLAYER LOGIC ---
+            const playBtn = document.getElementById('playBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const volumeSlider = document.getElementById('volumeSlider');
+            const progressBar = document.getElementById('progressBar');
+            const timeDisplay = document.querySelector('.time-display');
+            const trackName = document.querySelector('.track-name');
+            const trackArtist = document.querySelector('.track-artist');
+            
+            /* [EDITADO] Lista de reproducción actualizada con archivos locales */
+            const tracks = [
+                { name: "On the Way", artist: "Aina The End", file: "track1.mp3" }, 
+                { name: "End of You", artist: "Poppy & Amy Lee", file: "track2.mp3" }, 
+                { name: "Rubia, Sol, Morena, Luna", artist: "Caramelos de Cianuro", file: "track3.mp3" }, 
+                { name: "Offline", artist: "Feid & Young Miko", file: "track4.mp3" }, 
+                { name: "Dispo", artist: "Young Miko & Karol G", file: "track5.mp3" } 
+            ];
+            
+            let currentTrackIndex = 0;
+            let isPlaying = false;
+            let progress = 0;
+            let interval;
+            // Variable para almacenar el objeto Audio
+            let audio = new Audio();
+            
+            const playIcon = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+            const pauseIcon = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+
+            function updateTrackInfo() {
+                trackName.textContent = tracks[currentTrackIndex].name;
+                trackArtist.textContent = tracks[currentTrackIndex].artist;
+                // Cargar la nueva pista pero no reproducir automáticamente a menos que ya estuviera sonando
+                audio.src = tracks[currentTrackIndex].file;
+                progress = 0;
+                progressBar.style.width = '0%';
+                timeDisplay.textContent = '00:00';
+            }
+            
+            // Inicializar info
+            updateTrackInfo();
+
+            playBtn.addEventListener('click', togglePlay);
+
+            function togglePlay() {
+                if (audio.paused) {
+                    audio.play().then(() => {
+                        isPlaying = true;
+                        playBtn.innerHTML = pauseIcon;
+                        // Iniciar intervalo para actualizar barra de progreso
+                        interval = setInterval(updateProgress, 100);
+                    }).catch(error => console.log("Audio play failed: ", error));
+                } else {
+                    audio.pause();
+                    isPlaying = false;
+                    playBtn.innerHTML = playIcon;
+                    clearInterval(interval);
+                }
+            }
+
+            function updateProgress() {
+                if (audio.duration) {
+                    const pct = (audio.currentTime / audio.duration) * 100;
+                    progressBar.style.width = `${pct}%`;
+                    
+                    let currentSeconds = Math.floor(audio.currentTime);
+                    let mins = Math.floor(currentSeconds / 60);
+                    let secs = currentSeconds % 60;
+                    timeDisplay.textContent = `0${mins}:${secs < 10 ? '0'+secs : secs}`;
+
+                    if (audio.ended) {
+                        nextTrack();
+                    }
+                }
+            }
+
+            nextBtn.addEventListener('click', nextTrack);
+            prevBtn.addEventListener('click', prevTrack);
+
+            function nextTrack() {
+                currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+                updateTrackInfo();
+                if(isPlaying) { 
+                    audio.play(); 
+                    playBtn.innerHTML = pauseIcon;
+                }
+            }
+
+            function prevTrack() {
+                currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+                updateTrackInfo();
+                if(isPlaying) { 
+                    audio.play(); 
+                    playBtn.innerHTML = pauseIcon;
+                }
+            }
+
+            volumeSlider.addEventListener('input', (e) => {
+                audio.volume = e.target.value / 100;
+            });
+        });
+    </script>
+</body>
+</html>
